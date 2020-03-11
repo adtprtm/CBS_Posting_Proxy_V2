@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://xml.asyst.co.id/cbs/service/posting" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns4="http://xml.asyst.co.id/commons/ws/fault" xmlns:ns="http://xml.asyst.co.id/commons/ws/header" xmlns:ns3="http://xml.asyst.co.id/commons/iso8583" xmlns:tns="http://wsdl.asyst.co.id/cbs/posting/proxy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns5="http://xml.asyst.co.id/cbs/posting/proxy" targetNamespace="http://wsdl.asyst.co.id/cbs/posting/proxy">
+    <import location="../../../../Commons/Schemas/WebServices/Header.xsd" namespace="http://xml.asyst.co.id/commons/ws/header"/>
+    <import location="../../../../Commons/Schemas/WebServices/Fault.xsd" namespace="http://xml.asyst.co.id/commons/ws/fault"/>
+    <import location="CBSPosting.xsd" namespace="http://xml.asyst.co.id/cbs/posting/proxy"/>
+    <message name="PostingReq">
+        <part element="ns:HeaderRQ" name="headerReq"/>
+        <part element="ns5:Posting" name="postingReq"/>
+    </message>
+    <message name="PostingRes">
+        <part element="ns:HeaderRS" name="headerRes"/>
+        <part element="ns5:Posting" name="postingRes"/>
+    </message>
+    <message name="Fault">
+        <part element="ns4:Err" name="fault"/>
+    </message>
+    <portType name="PostingPT">
+        <operation name="PostTransaction">
+            <input message="tns:PostingReq"/>
+            <output message="tns:PostingRes"/>
+            <fault message="tns:Fault" name="fault1"/>
+        </operation>
+    </portType>
+</definitions>

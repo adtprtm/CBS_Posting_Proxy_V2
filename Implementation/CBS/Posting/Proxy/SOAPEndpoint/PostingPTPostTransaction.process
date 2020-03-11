@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns="http://xml.asyst.co.id/integration/ws/header" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlPfx="http://wsdl.asyst.co.id/cbs/service/posting" xmlns:pfx5="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx4="http://xml.asyst.co.id/commons/logging/error" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://wsdl.asyst.co.id/cbs/posting/proxy" xmlns:pfx2="http://xml.asyst.co.id/commons/logging/audit" xmlns:pfx6="http://xml.asyst.co.id/commons/ws/fault" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns9="http://xml.asyst.co.id/commons/logging/transactionR" xmlns:ns5="http://xml.asyst.co.id/commons/iso8583" xmlns:ns6="http://xml.asyst.co.id/cbs/posting/proxy" xmlns:ns10="http://www.faizsiegeln.com/njams" xmlns:pfx="http://wsdl.asyst.co.id/cbs/service/posting/transaction" xmlns:ns7="http://www.tibco.com/pe/EngineTypes" xmlns:ns8="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://xml.asyst.co.id/cbs/service/posting" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://xml.asyst.co.id/commons/ws/header" xmlns:ns3="http://xml.asyst.co.id/integration/iso/8583" xmlns:CommonUtils="java://Commons" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://xml.asyst.co.id/commons/ws/header"/>
+    <xsd:import namespace="http://xml.asyst.co.id/commons/ws/fault" schemaLocation="/Tester/CBSPostingProxy-JMS.wsdl"/>
+    <wsdl:import namespace="http://wsdl.asyst.co.id/cbs/posting/proxy" location="/SharedResources/CBS/Posting/Proxy/Schemas/CBSPosting.wsdl"/>
+    <pd:name>Implementation/CBS/Posting/Proxy/SOAPEndpoint/PostingPTPostTransaction.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx3:PostingReq"/>
+    <pd:startX>52</pd:startX>
+    <pd:startY>71</pd:startY>
+    <pd:returnBindings>
+        <pfx3:PostingRes>
+            <headerRes>
+                <ns4:HeaderRS>
+                    <ns4:ResDateTime>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns4:ResDateTime>
+                    <ns4:ClientTxnID>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID"/>
+                    </ns4:ClientTxnID>
+                    <xsl:if test="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:IsLastTxn">
+                        <ns4:IsLastTxn>
+                            <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:IsLastTxn"/>
+                        </ns4:IsLastTxn>
+                    </xsl:if>
+                    <ns4:ResCode>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/ResponseCode/SUCCESS"/>
+                    </ns4:ResCode>
+                </ns4:HeaderRS>
+            </headerRes>
+            <postingRes>
+                <xsl:copy-of select="$Call_Posting/PostingRes/ns6:Posting"/>
+            </postingRes>
+        </pfx3:PostingRes>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx3:PostingRes"/>
+    <pd:endX>937</pd:endX>
+    <pd:endY>71</pd:endY>
+    <pd:errorSchemas>
+        <Fault wsMsgRef="pfx3:Fault"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <timestamp>
+            <xsd:element name="startTimestamp" type="xsd:double"/>
+        </timestamp>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1446435463357</pd:targetNamespace>
+    <pd:activity name="AssignTimestamp">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>151</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <variableName>timestamp</variableName>
+        </config>
+        <pd:inputBindings>
+            <startTimestamp>
+                <xsl:value-of select="tib:timestamp()"/>
+            </startTimestamp>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call_Posting">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>608</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <processName>/Implementation/CBS/Posting/Proxy/Process/PostingManager_Update.process</processName>
+            <processNameXPath/>
+        </config>
+        <pd:inputBindings>
+            <PostingReq>
+                <BWTxnID>
+                    <xsl:value-of select="$GenerateBWTxnID/ID/BWTxnID"/>
+                </BWTxnID>
+                <ClientTxnID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID"/>
+                </ClientTxnID>
+                <ClientID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID"/>
+                </ClientID>
+                <xsl:choose>
+                    <xsl:when test="$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns5:ISOMessages/ns5:DataElement/ns5:Element_11">
+                        <STAN_S>
+                            <xsl:value-of select="$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns5:ISOMessages/ns5:DataElement/ns5:Element_11"/>
+                        </STAN_S>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <STAN_S>
+                            <xsl:value-of select="$GenerateBWTxnID/ID/STAN_S"/>
+                        </STAN_S>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:copy-of select="$Start/pfx3:PostingReq/postingReq/ns6:Posting"/>
+            </PostingReq>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>305</pd:x>
+        <pd:y>336</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>829</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <role>User</role>
+            <suppressHeader>true</suppressHeader>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Posting process triggered by &quot;,&#xA;&#x9;$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID,&#xA;&#x9;&quot; with type &quot;, $Start/pfx3:PostingReq/postingReq/ns6:Posting/ns6:Type,&#xA;&#x9;&quot; has finished at &quot;, current-dateTime(),&#xA;&#x9;&quot; and performed for &quot;, tib:timestamp()-$timestamp/startTimestamp, &quot; ms&quot;)"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="&quot;END AUDIT&quot;"/>
+                </msgCode>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ErrorLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>707</pd:x>
+        <pd:y>338</pd:y>
+        <config>
+            <processName>/Implementation/Commons/Logging/ErrorLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx4:Err>
+                <pfx4:ErrSrc>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID"/>
+                </pfx4:ErrSrc>
+                <pfx4:ErrTgt>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/CBS/Posting/Proxy/ProjectName"/>
+                </pfx4:ErrTgt>
+                <pfx4:ErrDateTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx4:ErrDateTime>
+                <xsl:if test="$_error/ns7:ErrorReport/Msg">
+                    <pfx4:ErrDetail>
+                        <xsl:value-of select="$_error/ns7:ErrorReport/Msg"/>
+                    </pfx4:ErrDetail>
+                </xsl:if>
+                <pfx4:BWErrDetails>
+                    <pfx4:ErrHeader>
+                        <xsl:choose>
+                            <xsl:when test="exists($InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:BWTxnID)">
+                                <pfx4:BWTxnID>
+                                    <xsl:value-of select="$GenerateBWTxnID/ID/BWTxnID"/>
+                                </pfx4:BWTxnID>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <pfx4:BWTxnID>
+                                    <xsl:value-of select="CommonUtils:generateRandomUUID()"/>
+                                </pfx4:BWTxnID>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <pfx4:ClientTxnID>
+                            <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID"/>
+                        </pfx4:ClientTxnID>
+                        <pfx4:ClientID>
+                            <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID"/>
+                        </pfx4:ClientID>
+                        <pfx4:BWProcess>
+                            <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                        </pfx4:BWProcess>
+                        <pfx4:BWActivity>
+                            <xsl:value-of select="BW:getCurrentActivityName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                        </pfx4:BWActivity>
+                    </pfx4:ErrHeader>
+                    <xsl:for-each select="$_error/ns7:ErrorReport">
+                        <pfx4:ErrReport>
+                            <pfx4:StackTrace>
+                                <xsl:value-of select="StackTrace"/>
+                            </pfx4:StackTrace>
+                            <pfx4:Msg>
+                                <xsl:value-of select="Msg"/>
+                            </pfx4:Msg>
+                            <pfx4:FullClass>
+                                <xsl:value-of select="FullClass"/>
+                            </pfx4:FullClass>
+                            <pfx4:Class>
+                                <xsl:value-of select="Class"/>
+                            </pfx4:Class>
+                            <pfx4:ProcessStack>
+                                <xsl:value-of select="ProcessStack"/>
+                            </pfx4:ProcessStack>
+                            <xsl:if test="MsgCode">
+                                <pfx4:MsgCode>
+                                    <xsl:value-of select="MsgCode"/>
+                                </pfx4:MsgCode>
+                            </xsl:if>
+                        </pfx4:ErrReport>
+                    </xsl:for-each>
+                </pfx4:BWErrDetails>
+            </pfx4:Err>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GenerateBWTxnID">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>376</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <element>
+                <xsd:element name="ID">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="BWTxnID" type="xsd:string"/>
+                            <xsd:element name="STAN_S" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <ID>
+                <BWTxnID>
+                    <xsl:value-of select="CommonUtils:generateRandomUUID()"/>
+                </BWTxnID>
+                <STAN_S>
+                    <xsl:value-of select="CommonUtils:generateRandomString(12)"/>
+                </STAN_S>
+            </ID>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InputAuditLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>506</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/Implementation/Commons/Logging/AuditLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx2:LogDetail>
+                <pfx2:LogHeader>
+                    <pfx2:BWTxnID>
+                        <xsl:value-of select="$GenerateBWTxnID/ID/BWTxnID"/>
+                    </pfx2:BWTxnID>
+                    <pfx2:ClientTxnID>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID"/>
+                    </pfx2:ClientTxnID>
+                    <pfx2:ClientID>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID"/>
+                    </pfx2:ClientID>
+                    <pfx2:UserID>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Identity/ns4:UserID"/>
+                    </pfx2:UserID>
+                    <pfx2:Hostname>
+                        <xsl:value-of select="BW:getHostName()"/>
+                    </pfx2:Hostname>
+                    <pfx2:Providername>
+                        <xsl:value-of select="&quot;CBS&quot;"/>
+                    </pfx2:Providername>
+                    <pfx2:ServiceName>
+                        <xsl:value-of select="$_processContext/ns7:ProcessContext/ProjectName"/>
+                    </pfx2:ServiceName>
+                    <pfx2:ServiceVersion>
+                        <xsl:value-of select="&quot;V2_0&quot;"/>
+                    </pfx2:ServiceVersion>
+                    <pfx2:OperationName>
+                        <xsl:value-of select="&quot;Posting_Proxy&quot;"/>
+                    </pfx2:OperationName>
+                    <pfx2:BWProcess>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                    </pfx2:BWProcess>
+                    <pfx2:BWActivity>
+                        <xsl:value-of select="BW:getCurrentActivityName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                    </pfx2:BWActivity>
+                    <pfx2:LogType>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/Logging/Types/AUDIT"/>
+                    </pfx2:LogType>
+                </pfx2:LogHeader>
+                <pfx2:LogTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx2:LogTime>
+                <pfx2:Identifier>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/Logging/Identifier/BW_START"/>
+                </pfx2:Identifier>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="$_globalVariables/ns1:GlobalVariables/SharedResources/Logging/auditEnabled = &quot;true&quot;">
+                    <pfx2:AuditDetails>
+                        <xsl:value-of select="tib:render-xml($Start/pfx3:PostingReq/postingReq/ns6:Posting/ns5:ISOMessages, false(), true())"/>
+                    </pfx2:AuditDetails>
+                </xsl:if>
+            </pfx2:LogDetail>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InsertReqTransLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>506</pd:x>
+        <pd:y>191</pd:y>
+        <config>
+            <processName>/Implementation/Commons/Logging/TransLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns9:TransLogR>
+                <ns9:DateTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns9:DateTime>
+                <ns9:ModuleName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/CBS/Posting/Proxy/ProjectName"/>
+                </ns9:ModuleName>
+                <ns9:BWTxnID>
+                    <xsl:value-of select="$GenerateBWTxnID/ID/BWTxnID"/>
+                </ns9:BWTxnID>
+                <ns9:ClientTxnID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID"/>
+                </ns9:ClientTxnID>
+                <ns9:ClientID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID"/>
+                </ns9:ClientID>
+                <ns9:UserID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Identity/ns4:UserID"/>
+                </ns9:UserID>
+                <xsl:if test="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SessionID">
+                    <ns9:SessionID>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SessionID"/>
+                    </ns9:SessionID>
+                </xsl:if>
+                <xsl:if test="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SequenceNumber">
+                    <ns9:SequenceNumber>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SequenceNumber"/>
+                    </ns9:SequenceNumber>
+                </xsl:if>
+                <ns9:Type>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns6:Type"/>
+                </ns9:Type>
+                <xsl:copy-of select="$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns5:ISOMessages"/>
+            </ns9:TransLogR>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InsertResTransLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>721</pd:x>
+        <pd:y>190</pd:y>
+        <config>
+            <processName>/Implementation/Commons/Logging/TransLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns9:TransLogR>
+                <ns9:DateTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns9:DateTime>
+                <ns9:ModuleName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/CBS/Posting/Proxy/ProjectName"/>
+                </ns9:ModuleName>
+                <ns9:BWTxnID>
+                    <xsl:value-of select="$GenerateBWTxnID/ID/BWTxnID"/>
+                </ns9:BWTxnID>
+                <ns9:ClientTxnID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID"/>
+                </ns9:ClientTxnID>
+                <ns9:ClientID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID"/>
+                </ns9:ClientID>
+                <ns9:UserID>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Identity/ns4:UserID"/>
+                </ns9:UserID>
+                <xsl:if test="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SessionID">
+                    <ns9:SessionID>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SessionID"/>
+                    </ns9:SessionID>
+                </xsl:if>
+                <xsl:if test="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SequenceNumber">
+                    <ns9:SequenceNumber>
+                        <xsl:value-of select="$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:Session/ns4:SequenceNumber"/>
+                    </ns9:SequenceNumber>
+                </xsl:if>
+                <ns9:Type>
+                    <xsl:value-of select="$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns6:Type"/>
+                </ns9:Type>
+                <xsl:choose>
+                    <xsl:when test="$Call_Posting/PostingRes/ns6:Posting/ns5:ISOMessages/ns5:DataElement/ns5:Element_39 = &quot;000&quot;&#xA;or&#xA;$Call_Posting/PostingRes/ns6:Posting/ns5:ISOMessages/ns5:DataElement/ns5:Element_39 = &quot;00&quot;">
+                        <ns9:Status>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/ResponseCode/SUCCESS"/>
+                        </ns9:Status>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <ns9:Status>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/ResponseCode/FAILED"/>
+                        </ns9:Status>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:copy-of select="$Call_Posting/PostingRes/ns6:Posting/ns5:ISOMessages"/>
+            </ns9:TransLogR>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogError">
+        <pd:type>com.faizsiegeln.njams.client.palette.Error</pd:type>
+        <pd:resourceType>njams.activity.error</pd:resourceType>
+        <pd:x>583</pd:x>
+        <pd:y>338</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns10:nJAMSLogError>
+                <ns10:EventMsgCode>
+                    <xsl:value-of select="&quot;ERROR AUDIT&quot;"/>
+                </ns10:EventMsgCode>
+                <ns10:EventMsg>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;An error occured while processing posting request triggered by &quot;,&#xA;&#x9;$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID,&#xA;&#x9;&quot; at &quot;,current-dateTime(),&#xA;&#x9;&quot;and performed for &quot;, tib:timestamp()-$timestamp/startTimestamp, &quot; ms&quot;,  &quot;&#xD;&#xA;&quot;,&#xA;&#x9;&quot;Error Log : &quot;,&#xA;&#x9;tib:render-xml($_error/ns7:ErrorReport, false(), true()))"/>
+                </ns10:EventMsg>
+            </ns10:nJAMSLogError>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogInfo">
+        <pd:type>com.faizsiegeln.njams.client.palette.Info</pd:type>
+        <pd:resourceType>njams.activity.info</pd:resourceType>
+        <pd:x>269</pd:x>
+        <pd:y>192</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns10:nJAMSLogInfo>
+                <ns10:EventMsgCode>
+                    <xsl:value-of select="&quot;START AUDIT&quot;"/>
+                </ns10:EventMsgCode>
+                <ns10:EventMsg>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Start posting process with type &quot;,&#xA;&#x9;$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns6:Type,&#xA;&#x9;&quot; triggered by &quot;, $Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID,&#xA;&#x9;&quot; at &quot;, current-dateTime()&#xA;)"/>
+                </ns10:EventMsg>
+            </ns10:nJAMSLogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogSuccess">
+        <pd:type>com.faizsiegeln.njams.client.palette.Success</pd:type>
+        <pd:resourceType>njams.activity.success</pd:resourceType>
+        <pd:x>829</pd:x>
+        <pd:y>190</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns10:nJAMSLogSuccess>
+                <ns10:EventMsgCode>
+                    <xsl:value-of select="&quot;END AUDIT&quot;"/>
+                </ns10:EventMsgCode>
+                <ns10:EventMsg>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Posting process triggered by &quot;,&#xA;&#x9;$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:ClientTxnID,&#xA;&#x9;&quot; with type &quot;, $Start/pfx3:PostingReq/postingReq/ns6:Posting/ns6:Type,&#xA;&#x9;&quot; has finished at &quot;, current-dateTime(),&#xA;&#x9;&quot; and performed for &quot;, tib:timestamp()-$timestamp/startTimestamp, &quot; ms&quot;)"/>
+                </ns10:EventMsg>
+            </ns10:nJAMSLogSuccess>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="OutputAuditLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>721</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/Implementation/Commons/Logging/AuditLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx2:LogDetail>
+                <pfx2:LogHeader>
+                    <pfx2:BWTxnID>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:BWTxnID"/>
+                    </pfx2:BWTxnID>
+                    <pfx2:ClientTxnID>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:ClientTxnID"/>
+                    </pfx2:ClientTxnID>
+                    <pfx2:ClientID>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:ClientID"/>
+                    </pfx2:ClientID>
+                    <pfx2:UserID>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:UserID"/>
+                    </pfx2:UserID>
+                    <pfx2:Hostname>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:Hostname"/>
+                    </pfx2:Hostname>
+                    <pfx2:Providername>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:Providername"/>
+                    </pfx2:Providername>
+                    <pfx2:ServiceName>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:ServiceName"/>
+                    </pfx2:ServiceName>
+                    <pfx2:ServiceVersion>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:ServiceVersion"/>
+                    </pfx2:ServiceVersion>
+                    <pfx2:OperationName>
+                        <xsl:value-of select="$InputAuditLog/pfx2:LogDetail/pfx2:LogHeader/pfx2:OperationName"/>
+                    </pfx2:OperationName>
+                    <pfx2:BWProcess>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                    </pfx2:BWProcess>
+                    <pfx2:BWActivity>
+                        <xsl:value-of select="BW:getCurrentActivityName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                    </pfx2:BWActivity>
+                    <pfx2:LogType>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/Logging/Types/AUDIT"/>
+                    </pfx2:LogType>
+                </pfx2:LogHeader>
+                <pfx2:LogTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </pfx2:LogTime>
+                <pfx2:Identifier>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/SharedResources/Logging/Identifier/BW_END"/>
+                </pfx2:Identifier>
+                <xsl:if test="$_globalVariables/ns1:GlobalVariables/SharedResources/Logging/auditEnabled = &quot;true&quot;">
+                    <pfx2:AuditDetails>
+                        <xsl:value-of select="tib:render-xml($Call_Posting/PostingRes/ns6:Posting/ns5:ISOMessages, false(), true())"/>
+                    </pfx2:AuditDetails>
+                </xsl:if>
+            </pfx2:LogDetail>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="PostingError">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>609</pd:x>
+        <pd:y>189</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <ns8:ActivityInput>
+                <message>
+                    <xsl:value-of select="$_error/ns7:ErrorReport/StackTrace"/>
+                </message>
+                <messageCode>
+                    <xsl:value-of select="&quot;GENERATE ERROR AUDIT&quot;"/>
+                </messageCode>
+            </ns8:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>269</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <role>User</role>
+            <suppressHeader>true</suppressHeader>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Start posting process with type &quot;,&#xA;&#x9;$Start/pfx3:PostingReq/postingReq/ns6:Posting/ns6:Type,&#xA;&#x9;&quot; triggered by &quot;, $Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID,&#xA;&#x9;&quot; at &quot;, current-dateTime()&#xA;)"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="&quot;START AUDIT&quot;"/>
+                </msgCode>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="WriteErrorLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>453</pd:x>
+        <pd:y>338</pd:y>
+        <config>
+            <role>User</role>
+            <suppressHeader>true</suppressHeader>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;An error occured while processing posting request triggered by &quot;,&#xA;&#x9;$Start/pfx3:PostingReq/headerReq/ns4:HeaderRQ/ns4:Credentials/ns4:ClientID,&#xA;&#x9;&quot; at &quot;,current-dateTime(),&#xA;&#x9;&quot;and performed for &quot;, tib:timestamp()-$timestamp/startTimestamp, &quot; ms&quot;,  &quot;&#xD;&#xA;&quot;,&#xA;&#x9;&quot;Error Log : &quot;,&#xA;&#x9;tib:render-xml($_error/ns7:ErrorReport, false(), true()))"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="&quot;ERROR AUDIT&quot;"/>
+                </msgCode>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Rethrow">
+        <pd:type>com.tibco.pe.core.RethrowActivity</pd:type>
+        <pd:resourceType>ae.activities.rethrow</pd:resourceType>
+        <pd:x>841</pd:x>
+        <pd:y>335</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>AssignTimestamp</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>WriteErrorLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>WriteErrorLog</pd:from>
+        <pd:to>LogError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ErrorLog</pd:from>
+        <pd:to>Rethrow</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateBWTxnID</pd:from>
+        <pd:to>InputAuditLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call_Posting</pd:from>
+        <pd:to>PostingError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AssignTimestamp</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>LogSuccess</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InsertReqTransLog</pd:from>
+        <pd:to>Call_Posting</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call_Posting</pd:from>
+        <pd:to>InsertResTransLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InsertResTransLog</pd:from>
+        <pd:to>OutputAuditLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>LogInfo</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogInfo</pd:from>
+        <pd:to>GenerateBWTxnID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogError</pd:from>
+        <pd:to>ErrorLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogSuccess</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InputAuditLog</pd:from>
+        <pd:to>InsertReqTransLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>OutputAuditLog</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

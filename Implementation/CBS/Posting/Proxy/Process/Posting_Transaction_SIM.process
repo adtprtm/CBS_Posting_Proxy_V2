@@ -1,0 +1,1572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns5="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns12="http://xml.asyst.co.id/cbs/posting/translog" xmlns:ns6="www.tibco.com/plugin/java/JavaMethodActivityInput" xmlns:ns7="www.tibco.com/plugin/java/JavaMethodActivityOutput" xmlns:pfx="http://xml.asyst.co.id/cbs/service/posting" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/as400/IBM_BKP_MIA_Posting/ProgramCall/ProgramCall" xmlns:ns1="http://xml.asyst.co.id/commons/logging/audit" xmlns:ns4="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://xml.asyst.co.id/commons/logging/transaction" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://xml.asyst.co.id/cbs/posting/postingdata" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx3="http://xml.asyst.co.id/cbs/posting/postdata" xmlns:pfx2="http://xml.asyst.co.id/commons/iso8583" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://xml.asyst.co.id/cbs/service/posting" schemaLocation="/SharedResources/CBS/Posting/Proxy/Schemas/CBSPosting.xsd"/>
+    <xsd:import namespace="http://xml.asyst.co.id/commons/iso8583" schemaLocation="/SharedResources/Commons/Schemas/ISO/ISO8583.xsd"/>
+    <xsd:import namespace="http://xml.asyst.co.id/cbs/posting/postdata" schemaLocation="/SharedResources/CBS/Posting/Proxy/Schemas/PostData.xsd"/>
+    <xsd:import namespace="http://xml.asyst.co.id/cbs/posting/postingdata" schemaLocation="/SharedResources/CBS/Posting/Proxy/Schemas/PostingData.xsd"/>
+    <pd:name>Implementation/CBS/Posting/Proxy/Process/Posting_Transaction_SIM.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="TransactionReq">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="BWTxnID" type="xsd:string"/>
+                    <xsd:element name="ClientTxnID" type="xsd:string"/>
+                    <xsd:element name="ClientID" type="xsd:string"/>
+                    <xsd:element name="STAN_S" type="xsd:string"/>
+                    <xsd:element ref="pfx2:ISOMessages"/>
+                    <xsd:element name="ActiveLib" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>64</pd:startX>
+    <pd:startY>154</pd:startY>
+    <pd:returnBindings>
+        <TransactionRes>
+            <BWTxnID>
+                <xsl:value-of select="$Start/TransactionReq/BWTxnID"/>
+            </BWTxnID>
+            <ClientTxnID>
+                <xsl:value-of select="$Start/TransactionReq/ClientTxnID"/>
+            </ClientTxnID>
+            <ClientID>
+                <xsl:value-of select="$Start/TransactionReq/ClientID"/>
+            </ClientID>
+            <STAN_S>
+                <xsl:value-of select="$Start/TransactionReq/STAN_S"/>
+            </STAN_S>
+            <xsl:for-each select="$GenerateDataOutput/pfx2:ISOMessages">
+                <pfx2:ISOMessages>
+                    <xsl:for-each select="pfx2:Data">
+                        <pfx2:Data>
+                            <xsl:if test="pfx2:BinaryData">
+                                <pfx2:BinaryData>
+                                    <xsl:value-of select="pfx2:BinaryData"/>
+                                </pfx2:BinaryData>
+                            </xsl:if>
+                            <xsl:if test="pfx2:StringData">
+                                <pfx2:StringData>
+                                    <xsl:value-of select="pfx2:StringData"/>
+                                </pfx2:StringData>
+                            </xsl:if>
+                        </pfx2:Data>
+                    </xsl:for-each>
+                    <xsl:if test="pfx2:MTI">
+                        <pfx2:MTI>
+                            <xsl:value-of select="pfx2:MTI"/>
+                        </pfx2:MTI>
+                    </xsl:if>
+                    <xsl:for-each select="pfx2:DataElement">
+                        <pfx2:DataElement>
+                            <xsl:if test="pfx2:Element_01">
+                                <pfx2:Element_01>
+                                    <xsl:value-of select="pfx2:Element_01"/>
+                                </pfx2:Element_01>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_02">
+                                <pfx2:Element_02>
+                                    <xsl:value-of select="pfx2:Element_02"/>
+                                </pfx2:Element_02>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_03">
+                                <pfx2:Element_03>
+                                    <xsl:value-of select="pfx2:Element_03"/>
+                                </pfx2:Element_03>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_04">
+                                <pfx2:Element_04>
+                                    <xsl:value-of select="pfx2:Element_04"/>
+                                </pfx2:Element_04>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_05">
+                                <pfx2:Element_05>
+                                    <xsl:value-of select="pfx2:Element_05"/>
+                                </pfx2:Element_05>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_06">
+                                <pfx2:Element_06>
+                                    <xsl:value-of select="pfx2:Element_06"/>
+                                </pfx2:Element_06>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_07">
+                                <pfx2:Element_07>
+                                    <xsl:value-of select="pfx2:Element_07"/>
+                                </pfx2:Element_07>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_08">
+                                <pfx2:Element_08>
+                                    <xsl:value-of select="pfx2:Element_08"/>
+                                </pfx2:Element_08>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_09">
+                                <pfx2:Element_09>
+                                    <xsl:value-of select="pfx2:Element_09"/>
+                                </pfx2:Element_09>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_10">
+                                <pfx2:Element_10>
+                                    <xsl:value-of select="pfx2:Element_10"/>
+                                </pfx2:Element_10>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_11">
+                                <pfx2:Element_11>
+                                    <xsl:value-of select="pfx2:Element_11"/>
+                                </pfx2:Element_11>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_12">
+                                <pfx2:Element_12>
+                                    <xsl:value-of select="pfx2:Element_12"/>
+                                </pfx2:Element_12>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_13">
+                                <pfx2:Element_13>
+                                    <xsl:value-of select="pfx2:Element_13"/>
+                                </pfx2:Element_13>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_14">
+                                <pfx2:Element_14>
+                                    <xsl:value-of select="pfx2:Element_14"/>
+                                </pfx2:Element_14>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_15">
+                                <pfx2:Element_15>
+                                    <xsl:value-of select="pfx2:Element_15"/>
+                                </pfx2:Element_15>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_16">
+                                <pfx2:Element_16>
+                                    <xsl:value-of select="pfx2:Element_16"/>
+                                </pfx2:Element_16>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_17">
+                                <pfx2:Element_17>
+                                    <xsl:value-of select="pfx2:Element_17"/>
+                                </pfx2:Element_17>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_18">
+                                <pfx2:Element_18>
+                                    <xsl:value-of select="pfx2:Element_18"/>
+                                </pfx2:Element_18>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_19">
+                                <pfx2:Element_19>
+                                    <xsl:value-of select="pfx2:Element_19"/>
+                                </pfx2:Element_19>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_20">
+                                <pfx2:Element_20>
+                                    <xsl:value-of select="pfx2:Element_20"/>
+                                </pfx2:Element_20>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_21">
+                                <pfx2:Element_21>
+                                    <xsl:value-of select="pfx2:Element_21"/>
+                                </pfx2:Element_21>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_22">
+                                <pfx2:Element_22>
+                                    <xsl:value-of select="pfx2:Element_22"/>
+                                </pfx2:Element_22>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_23">
+                                <pfx2:Element_23>
+                                    <xsl:value-of select="pfx2:Element_23"/>
+                                </pfx2:Element_23>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_24">
+                                <pfx2:Element_24>
+                                    <xsl:value-of select="pfx2:Element_24"/>
+                                </pfx2:Element_24>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_25">
+                                <pfx2:Element_25>
+                                    <xsl:value-of select="pfx2:Element_25"/>
+                                </pfx2:Element_25>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_26">
+                                <pfx2:Element_26>
+                                    <xsl:value-of select="pfx2:Element_26"/>
+                                </pfx2:Element_26>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_27">
+                                <pfx2:Element_27>
+                                    <xsl:value-of select="pfx2:Element_27"/>
+                                </pfx2:Element_27>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_28">
+                                <pfx2:Element_28>
+                                    <xsl:value-of select="pfx2:Element_28"/>
+                                </pfx2:Element_28>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_29">
+                                <pfx2:Element_29>
+                                    <xsl:value-of select="pfx2:Element_29"/>
+                                </pfx2:Element_29>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_30">
+                                <pfx2:Element_30>
+                                    <xsl:value-of select="pfx2:Element_30"/>
+                                </pfx2:Element_30>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_31">
+                                <pfx2:Element_31>
+                                    <xsl:value-of select="pfx2:Element_31"/>
+                                </pfx2:Element_31>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_32">
+                                <pfx2:Element_32>
+                                    <xsl:value-of select="pfx2:Element_32"/>
+                                </pfx2:Element_32>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_33">
+                                <pfx2:Element_33>
+                                    <xsl:value-of select="pfx2:Element_33"/>
+                                </pfx2:Element_33>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_34">
+                                <pfx2:Element_34>
+                                    <xsl:value-of select="pfx2:Element_34"/>
+                                </pfx2:Element_34>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_35">
+                                <pfx2:Element_35>
+                                    <xsl:value-of select="pfx2:Element_35"/>
+                                </pfx2:Element_35>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_36">
+                                <pfx2:Element_36>
+                                    <xsl:value-of select="pfx2:Element_36"/>
+                                </pfx2:Element_36>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_37">
+                                <pfx2:Element_37>
+                                    <xsl:value-of select="pfx2:Element_37"/>
+                                </pfx2:Element_37>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_38">
+                                <pfx2:Element_38>
+                                    <xsl:value-of select="pfx2:Element_38"/>
+                                </pfx2:Element_38>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_39">
+                                <pfx2:Element_39>
+                                    <xsl:value-of select="pfx2:Element_39"/>
+                                </pfx2:Element_39>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_40">
+                                <pfx2:Element_40>
+                                    <xsl:value-of select="pfx2:Element_40"/>
+                                </pfx2:Element_40>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_41">
+                                <pfx2:Element_41>
+                                    <xsl:value-of select="pfx2:Element_41"/>
+                                </pfx2:Element_41>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_42">
+                                <pfx2:Element_42>
+                                    <xsl:value-of select="pfx2:Element_42"/>
+                                </pfx2:Element_42>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_43">
+                                <pfx2:Element_43>
+                                    <xsl:value-of select="pfx2:Element_43"/>
+                                </pfx2:Element_43>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_44">
+                                <pfx2:Element_44>
+                                    <xsl:value-of select="pfx2:Element_44"/>
+                                </pfx2:Element_44>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_45">
+                                <pfx2:Element_45>
+                                    <xsl:value-of select="pfx2:Element_45"/>
+                                </pfx2:Element_45>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_46">
+                                <pfx2:Element_46>
+                                    <xsl:value-of select="pfx2:Element_46"/>
+                                </pfx2:Element_46>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_47">
+                                <pfx2:Element_47>
+                                    <xsl:value-of select="pfx2:Element_47"/>
+                                </pfx2:Element_47>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_48">
+                                <pfx2:Element_48>
+                                    <xsl:value-of select="pfx2:Element_48"/>
+                                </pfx2:Element_48>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_49">
+                                <pfx2:Element_49>
+                                    <xsl:value-of select="pfx2:Element_49"/>
+                                </pfx2:Element_49>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_50">
+                                <pfx2:Element_50>
+                                    <xsl:value-of select="pfx2:Element_50"/>
+                                </pfx2:Element_50>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_51">
+                                <pfx2:Element_51>
+                                    <xsl:value-of select="pfx2:Element_51"/>
+                                </pfx2:Element_51>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_52">
+                                <pfx2:Element_52>
+                                    <xsl:value-of select="pfx2:Element_52"/>
+                                </pfx2:Element_52>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_53">
+                                <pfx2:Element_53>
+                                    <xsl:value-of select="pfx2:Element_53"/>
+                                </pfx2:Element_53>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_54">
+                                <pfx2:Element_54>
+                                    <xsl:value-of select="pfx2:Element_54"/>
+                                </pfx2:Element_54>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_55">
+                                <pfx2:Element_55>
+                                    <xsl:value-of select="pfx2:Element_55"/>
+                                </pfx2:Element_55>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_56">
+                                <pfx2:Element_56>
+                                    <xsl:value-of select="pfx2:Element_56"/>
+                                </pfx2:Element_56>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_57">
+                                <pfx2:Element_57>
+                                    <xsl:value-of select="pfx2:Element_57"/>
+                                </pfx2:Element_57>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_58">
+                                <pfx2:Element_58>
+                                    <xsl:value-of select="pfx2:Element_58"/>
+                                </pfx2:Element_58>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_59">
+                                <pfx2:Element_59>
+                                    <xsl:value-of select="pfx2:Element_59"/>
+                                </pfx2:Element_59>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_60">
+                                <pfx2:Element_60>
+                                    <xsl:value-of select="pfx2:Element_60"/>
+                                </pfx2:Element_60>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_61">
+                                <pfx2:Element_61>
+                                    <xsl:value-of select="pfx2:Element_61"/>
+                                </pfx2:Element_61>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_62">
+                                <pfx2:Element_62>
+                                    <xsl:value-of select="pfx2:Element_62"/>
+                                </pfx2:Element_62>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_63">
+                                <pfx2:Element_63>
+                                    <xsl:value-of select="pfx2:Element_63"/>
+                                </pfx2:Element_63>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_64">
+                                <pfx2:Element_64>
+                                    <xsl:value-of select="pfx2:Element_64"/>
+                                </pfx2:Element_64>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_65">
+                                <pfx2:Element_65>
+                                    <xsl:value-of select="pfx2:Element_65"/>
+                                </pfx2:Element_65>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_66">
+                                <pfx2:Element_66>
+                                    <xsl:value-of select="pfx2:Element_66"/>
+                                </pfx2:Element_66>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_67">
+                                <pfx2:Element_67>
+                                    <xsl:value-of select="pfx2:Element_67"/>
+                                </pfx2:Element_67>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_68">
+                                <pfx2:Element_68>
+                                    <xsl:value-of select="pfx2:Element_68"/>
+                                </pfx2:Element_68>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_69">
+                                <pfx2:Element_69>
+                                    <xsl:value-of select="pfx2:Element_69"/>
+                                </pfx2:Element_69>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_70">
+                                <pfx2:Element_70>
+                                    <xsl:value-of select="pfx2:Element_70"/>
+                                </pfx2:Element_70>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_71">
+                                <pfx2:Element_71>
+                                    <xsl:value-of select="pfx2:Element_71"/>
+                                </pfx2:Element_71>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_72">
+                                <pfx2:Element_72>
+                                    <xsl:value-of select="pfx2:Element_72"/>
+                                </pfx2:Element_72>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_73">
+                                <pfx2:Element_73>
+                                    <xsl:value-of select="pfx2:Element_73"/>
+                                </pfx2:Element_73>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_74">
+                                <pfx2:Element_74>
+                                    <xsl:value-of select="pfx2:Element_74"/>
+                                </pfx2:Element_74>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_75">
+                                <pfx2:Element_75>
+                                    <xsl:value-of select="pfx2:Element_75"/>
+                                </pfx2:Element_75>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_76">
+                                <pfx2:Element_76>
+                                    <xsl:value-of select="pfx2:Element_76"/>
+                                </pfx2:Element_76>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_77">
+                                <pfx2:Element_77>
+                                    <xsl:value-of select="pfx2:Element_77"/>
+                                </pfx2:Element_77>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_78">
+                                <pfx2:Element_78>
+                                    <xsl:value-of select="pfx2:Element_78"/>
+                                </pfx2:Element_78>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_79">
+                                <pfx2:Element_79>
+                                    <xsl:value-of select="pfx2:Element_79"/>
+                                </pfx2:Element_79>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_80">
+                                <pfx2:Element_80>
+                                    <xsl:value-of select="pfx2:Element_80"/>
+                                </pfx2:Element_80>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_81">
+                                <pfx2:Element_81>
+                                    <xsl:value-of select="pfx2:Element_81"/>
+                                </pfx2:Element_81>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_82">
+                                <pfx2:Element_82>
+                                    <xsl:value-of select="pfx2:Element_82"/>
+                                </pfx2:Element_82>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_83">
+                                <pfx2:Element_83>
+                                    <xsl:value-of select="pfx2:Element_83"/>
+                                </pfx2:Element_83>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_84">
+                                <pfx2:Element_84>
+                                    <xsl:value-of select="pfx2:Element_84"/>
+                                </pfx2:Element_84>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_85">
+                                <pfx2:Element_85>
+                                    <xsl:value-of select="pfx2:Element_85"/>
+                                </pfx2:Element_85>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_86">
+                                <pfx2:Element_86>
+                                    <xsl:value-of select="pfx2:Element_86"/>
+                                </pfx2:Element_86>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_87">
+                                <pfx2:Element_87>
+                                    <xsl:value-of select="pfx2:Element_87"/>
+                                </pfx2:Element_87>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_88">
+                                <pfx2:Element_88>
+                                    <xsl:value-of select="pfx2:Element_88"/>
+                                </pfx2:Element_88>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_89">
+                                <pfx2:Element_89>
+                                    <xsl:value-of select="pfx2:Element_89"/>
+                                </pfx2:Element_89>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_90">
+                                <pfx2:Element_90>
+                                    <xsl:value-of select="pfx2:Element_90"/>
+                                </pfx2:Element_90>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_91">
+                                <pfx2:Element_91>
+                                    <xsl:value-of select="pfx2:Element_91"/>
+                                </pfx2:Element_91>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_92">
+                                <pfx2:Element_92>
+                                    <xsl:value-of select="pfx2:Element_92"/>
+                                </pfx2:Element_92>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_93">
+                                <pfx2:Element_93>
+                                    <xsl:value-of select="pfx2:Element_93"/>
+                                </pfx2:Element_93>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_94">
+                                <pfx2:Element_94>
+                                    <xsl:value-of select="pfx2:Element_94"/>
+                                </pfx2:Element_94>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_95">
+                                <pfx2:Element_95>
+                                    <xsl:value-of select="pfx2:Element_95"/>
+                                </pfx2:Element_95>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_96">
+                                <pfx2:Element_96>
+                                    <xsl:value-of select="pfx2:Element_96"/>
+                                </pfx2:Element_96>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_97">
+                                <pfx2:Element_97>
+                                    <xsl:value-of select="pfx2:Element_97"/>
+                                </pfx2:Element_97>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_98">
+                                <pfx2:Element_98>
+                                    <xsl:value-of select="pfx2:Element_98"/>
+                                </pfx2:Element_98>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_99">
+                                <pfx2:Element_99>
+                                    <xsl:value-of select="pfx2:Element_99"/>
+                                </pfx2:Element_99>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_100">
+                                <pfx2:Element_100>
+                                    <xsl:value-of select="pfx2:Element_100"/>
+                                </pfx2:Element_100>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_101">
+                                <pfx2:Element_101>
+                                    <xsl:value-of select="pfx2:Element_101"/>
+                                </pfx2:Element_101>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_102">
+                                <pfx2:Element_102>
+                                    <xsl:value-of select="pfx2:Element_102"/>
+                                </pfx2:Element_102>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_103">
+                                <pfx2:Element_103>
+                                    <xsl:value-of select="pfx2:Element_103"/>
+                                </pfx2:Element_103>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_104">
+                                <pfx2:Element_104>
+                                    <xsl:value-of select="pfx2:Element_104"/>
+                                </pfx2:Element_104>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_105">
+                                <pfx2:Element_105>
+                                    <xsl:value-of select="pfx2:Element_105"/>
+                                </pfx2:Element_105>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_106">
+                                <pfx2:Element_106>
+                                    <xsl:value-of select="pfx2:Element_106"/>
+                                </pfx2:Element_106>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_107">
+                                <pfx2:Element_107>
+                                    <xsl:value-of select="pfx2:Element_107"/>
+                                </pfx2:Element_107>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_108">
+                                <pfx2:Element_108>
+                                    <xsl:value-of select="pfx2:Element_108"/>
+                                </pfx2:Element_108>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_109">
+                                <pfx2:Element_109>
+                                    <xsl:value-of select="pfx2:Element_109"/>
+                                </pfx2:Element_109>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_110">
+                                <pfx2:Element_110>
+                                    <xsl:value-of select="pfx2:Element_110"/>
+                                </pfx2:Element_110>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_111">
+                                <pfx2:Element_111>
+                                    <xsl:value-of select="pfx2:Element_111"/>
+                                </pfx2:Element_111>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_112">
+                                <pfx2:Element_112>
+                                    <xsl:value-of select="pfx2:Element_112"/>
+                                </pfx2:Element_112>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_113">
+                                <pfx2:Element_113>
+                                    <xsl:value-of select="pfx2:Element_113"/>
+                                </pfx2:Element_113>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_114">
+                                <pfx2:Element_114>
+                                    <xsl:value-of select="pfx2:Element_114"/>
+                                </pfx2:Element_114>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_115">
+                                <pfx2:Element_115>
+                                    <xsl:value-of select="pfx2:Element_115"/>
+                                </pfx2:Element_115>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_116">
+                                <pfx2:Element_116>
+                                    <xsl:value-of select="pfx2:Element_116"/>
+                                </pfx2:Element_116>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_117">
+                                <pfx2:Element_117>
+                                    <xsl:value-of select="pfx2:Element_117"/>
+                                </pfx2:Element_117>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_118">
+                                <pfx2:Element_118>
+                                    <xsl:value-of select="pfx2:Element_118"/>
+                                </pfx2:Element_118>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_119">
+                                <pfx2:Element_119>
+                                    <xsl:value-of select="pfx2:Element_119"/>
+                                </pfx2:Element_119>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_120">
+                                <pfx2:Element_120>
+                                    <xsl:value-of select="pfx2:Element_120"/>
+                                </pfx2:Element_120>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_121">
+                                <pfx2:Element_121>
+                                    <xsl:value-of select="pfx2:Element_121"/>
+                                </pfx2:Element_121>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_122">
+                                <pfx2:Element_122>
+                                    <xsl:value-of select="pfx2:Element_122"/>
+                                </pfx2:Element_122>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_123">
+                                <pfx2:Element_123>
+                                    <xsl:value-of select="pfx2:Element_123"/>
+                                </pfx2:Element_123>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_124">
+                                <pfx2:Element_124>
+                                    <xsl:value-of select="pfx2:Element_124"/>
+                                </pfx2:Element_124>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_125">
+                                <pfx2:Element_125>
+                                    <xsl:value-of select="pfx2:Element_125"/>
+                                </pfx2:Element_125>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_126">
+                                <pfx2:Element_126>
+                                    <xsl:value-of select="pfx2:Element_126"/>
+                                </pfx2:Element_126>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_127">
+                                <pfx2:Element_127>
+                                    <xsl:value-of select="pfx2:Element_127"/>
+                                </pfx2:Element_127>
+                            </xsl:if>
+                            <xsl:if test="pfx2:Element_128">
+                                <pfx2:Element_128>
+                                    <xsl:value-of select="pfx2:Element_128"/>
+                                </pfx2:Element_128>
+                            </xsl:if>
+                        </pfx2:DataElement>
+                    </xsl:for-each>
+                </pfx2:ISOMessages>
+            </xsl:for-each>
+        </TransactionRes>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="TransactionRes">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="BWTxnID" type="xsd:string"/>
+                    <xsd:element name="ClientTxnID" type="xsd:string"/>
+                    <xsd:element name="ClientID" type="xsd:string"/>
+                    <xsd:element name="STAN_S" type="xsd:string"/>
+                    <xsd:element ref="pfx2:ISOMessages"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1429</pd:endX>
+    <pd:endY>165</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <Timestamp>
+            <xsd:element name="startTimestamp" type="xsd:double"/>
+        </Timestamp>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1445239330552</pd:targetNamespace>
+    <pd:activity name="AssignTimestamp">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>198</pd:x>
+        <pd:y>154</pd:y>
+        <config>
+            <variableName>Timestamp</variableName>
+        </config>
+        <pd:inputBindings>
+            <startTimestamp>
+                <xsl:value-of select="tib:timestamp()"/>
+            </startTimestamp>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>60</pd:x>
+        <pd:y>282</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>1296</pd:x>
+        <pd:y>160</pd:y>
+        <config>
+            <role>User</role>
+            <suppressHeader>true</suppressHeader>
+        </config>
+        <pd:inputBindings>
+            <ns5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Transaction posting process triggered by &quot;, $Start/TransactionReq/ClientID,&#xA;&#x9;&quot; has finished at &quot;, current-dateTime(), &quot; and performed for &quot;, tib:timestamp()-$Timestamp/startTimestamp, &quot; ms long.&quot;)"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="&quot;END AUDIT&quot;"/>
+                </msgCode>
+            </ns5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ErrorLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>193</pd:x>
+        <pd:y>281</pd:y>
+        <config>
+            <role>User</role>
+            <suppressHeader>true</suppressHeader>
+        </config>
+        <pd:inputBindings>
+            <ns5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;An error occured while processing transaction posting triggered by &quot;, $Start/TransactionReq/ClientID,&#xA;&#x9;&quot; has finished at &quot;, current-dateTime(),&#xA;&#x9;&quot; and performed for &quot;,&#xA;&#x9;tib:timestamp()-$Timestamp/startTimestamp, &quot; ms long.&quot;,&#xA;&#x9;&quot; Error Message : &quot;,  &quot;&#xD;&#xA;&quot;,&#xA;&#x9;$_error/ns4:ErrorReport/StackTrace&#xA;)"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="&quot;ERROR AUDIT&quot;"/>
+                </msgCode>
+            </ns5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GenerateDataOutput">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1156</pd:x>
+        <pd:y>157</pd:y>
+        <config>
+            <element ref="pfx2:ISOMessages"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:ISOMessages>
+                <pfx2:MTI>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/CBS/Posting/Proxy/MTI_InqTrxRes"/>
+                </pfx2:MTI>
+                <xsl:for-each select="$Start/TransactionReq/pfx2:ISOMessages/pfx2:DataElement">
+                    <pfx2:DataElement>
+                        <xsl:if test="pfx2:Element_01">
+                            <pfx2:Element_01>
+                                <xsl:value-of select="pfx2:Element_01"/>
+                            </pfx2:Element_01>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_02">
+                            <pfx2:Element_02>
+                                <xsl:value-of select="pfx2:Element_02"/>
+                            </pfx2:Element_02>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_03">
+                            <pfx2:Element_03>
+                                <xsl:value-of select="pfx2:Element_03"/>
+                            </pfx2:Element_03>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_04">
+                            <pfx2:Element_04>
+                                <xsl:value-of select="pfx2:Element_04"/>
+                            </pfx2:Element_04>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_05">
+                            <pfx2:Element_05>
+                                <xsl:value-of select="pfx2:Element_05"/>
+                            </pfx2:Element_05>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_06">
+                            <pfx2:Element_06>
+                                <xsl:value-of select="pfx2:Element_06"/>
+                            </pfx2:Element_06>
+                        </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="pfx2:Element_07">
+                                <pfx2:Element_07>
+                                    <xsl:value-of select="pfx2:Element_07"/>
+                                </pfx2:Element_07>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <pfx2:Element_07>
+                                    <xsl:value-of select="tib:format-dateTime(&quot;MMddHHmmss&quot;, current-dateTime())"/>
+                                </pfx2:Element_07>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="pfx2:Element_08">
+                            <pfx2:Element_08>
+                                <xsl:value-of select="pfx2:Element_08"/>
+                            </pfx2:Element_08>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_09">
+                            <pfx2:Element_09>
+                                <xsl:value-of select="pfx2:Element_09"/>
+                            </pfx2:Element_09>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_10">
+                            <pfx2:Element_10>
+                                <xsl:value-of select="pfx2:Element_10"/>
+                            </pfx2:Element_10>
+                        </xsl:if>
+                        <pfx2:Element_11>
+                            <xsl:value-of select="../../STAN_S"/>
+                        </pfx2:Element_11>
+                        <xsl:choose>
+                            <xsl:when test="pfx2:Element_12">
+                                <pfx2:Element_12>
+                                    <xsl:value-of select="pfx2:Element_12"/>
+                                </pfx2:Element_12>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <pfx2:Element_12>
+                                    <xsl:value-of select="tib:format-dateTime(&quot;HHmmss&quot;, current-dateTime())"/>
+                                </pfx2:Element_12>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="pfx2:Element_13">
+                                <pfx2:Element_13>
+                                    <xsl:value-of select="pfx2:Element_13"/>
+                                </pfx2:Element_13>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <pfx2:Element_13>
+                                    <xsl:value-of select="tib:format-dateTime(&quot;MMdd&quot;, current-dateTime())"/>
+                                </pfx2:Element_13>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="pfx2:Element_14">
+                            <pfx2:Element_14>
+                                <xsl:value-of select="pfx2:Element_14"/>
+                            </pfx2:Element_14>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_15">
+                            <pfx2:Element_15>
+                                <xsl:value-of select="pfx2:Element_15"/>
+                            </pfx2:Element_15>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_16">
+                            <pfx2:Element_16>
+                                <xsl:value-of select="pfx2:Element_16"/>
+                            </pfx2:Element_16>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_17">
+                            <pfx2:Element_17>
+                                <xsl:value-of select="pfx2:Element_17"/>
+                            </pfx2:Element_17>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_18">
+                            <pfx2:Element_18>
+                                <xsl:value-of select="pfx2:Element_18"/>
+                            </pfx2:Element_18>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_19">
+                            <pfx2:Element_19>
+                                <xsl:value-of select="pfx2:Element_19"/>
+                            </pfx2:Element_19>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_20">
+                            <pfx2:Element_20>
+                                <xsl:value-of select="pfx2:Element_20"/>
+                            </pfx2:Element_20>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_21">
+                            <pfx2:Element_21>
+                                <xsl:value-of select="pfx2:Element_21"/>
+                            </pfx2:Element_21>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_22">
+                            <pfx2:Element_22>
+                                <xsl:value-of select="pfx2:Element_22"/>
+                            </pfx2:Element_22>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_23">
+                            <pfx2:Element_23>
+                                <xsl:value-of select="pfx2:Element_23"/>
+                            </pfx2:Element_23>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_24">
+                            <pfx2:Element_24>
+                                <xsl:value-of select="pfx2:Element_24"/>
+                            </pfx2:Element_24>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_25">
+                            <pfx2:Element_25>
+                                <xsl:value-of select="pfx2:Element_25"/>
+                            </pfx2:Element_25>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_26">
+                            <pfx2:Element_26>
+                                <xsl:value-of select="pfx2:Element_26"/>
+                            </pfx2:Element_26>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_27">
+                            <pfx2:Element_27>
+                                <xsl:value-of select="pfx2:Element_27"/>
+                            </pfx2:Element_27>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_28">
+                            <pfx2:Element_28>
+                                <xsl:value-of select="pfx2:Element_28"/>
+                            </pfx2:Element_28>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_29">
+                            <pfx2:Element_29>
+                                <xsl:value-of select="pfx2:Element_29"/>
+                            </pfx2:Element_29>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_30">
+                            <pfx2:Element_30>
+                                <xsl:value-of select="pfx2:Element_30"/>
+                            </pfx2:Element_30>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_31">
+                            <pfx2:Element_31>
+                                <xsl:value-of select="pfx2:Element_31"/>
+                            </pfx2:Element_31>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_32">
+                            <pfx2:Element_32>
+                                <xsl:value-of select="pfx2:Element_32"/>
+                            </pfx2:Element_32>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_33">
+                            <pfx2:Element_33>
+                                <xsl:value-of select="pfx2:Element_33"/>
+                            </pfx2:Element_33>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_34">
+                            <pfx2:Element_34>
+                                <xsl:value-of select="pfx2:Element_34"/>
+                            </pfx2:Element_34>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_35">
+                            <pfx2:Element_35>
+                                <xsl:value-of select="pfx2:Element_35"/>
+                            </pfx2:Element_35>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_36">
+                            <pfx2:Element_36>
+                                <xsl:value-of select="pfx2:Element_36"/>
+                            </pfx2:Element_36>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_37">
+                            <pfx2:Element_37>
+                                <xsl:value-of select="pfx2:Element_37"/>
+                            </pfx2:Element_37>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_38">
+                            <pfx2:Element_38>
+                                <xsl:value-of select="pfx2:Element_38"/>
+                            </pfx2:Element_38>
+                        </xsl:if>
+                        <pfx2:Element_39>
+                            <xsl:value-of select="'000'"/>
+                        </pfx2:Element_39>
+                        <xsl:if test="pfx2:Element_40">
+                            <pfx2:Element_40>
+                                <xsl:value-of select="pfx2:Element_40"/>
+                            </pfx2:Element_40>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_41">
+                            <pfx2:Element_41>
+                                <xsl:value-of select="pfx2:Element_41"/>
+                            </pfx2:Element_41>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_42">
+                            <pfx2:Element_42>
+                                <xsl:value-of select="pfx2:Element_42"/>
+                            </pfx2:Element_42>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_43">
+                            <pfx2:Element_43>
+                                <xsl:value-of select="pfx2:Element_43"/>
+                            </pfx2:Element_43>
+                        </xsl:if>
+                        <pfx2:Element_44>
+                            <xsl:value-of select="'SUKSES'"/>
+                        </pfx2:Element_44>
+                        <xsl:if test="pfx2:Element_45">
+                            <pfx2:Element_45>
+                                <xsl:value-of select="pfx2:Element_45"/>
+                            </pfx2:Element_45>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_46">
+                            <pfx2:Element_46>
+                                <xsl:value-of select="pfx2:Element_46"/>
+                            </pfx2:Element_46>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_47">
+                            <pfx2:Element_47>
+                                <xsl:value-of select="pfx2:Element_47"/>
+                            </pfx2:Element_47>
+                        </xsl:if>
+                        <pfx2:Element_48>
+                            <xsl:value-of select="concat(&#xA;&#x9;tib:pad(pfx2:Element_48, 140),&#xA;&#x9;'2019050299930000070'&#xA;)"/>
+                        </pfx2:Element_48>
+                        <xsl:if test="pfx2:Element_49">
+                            <pfx2:Element_49>
+                                <xsl:value-of select="pfx2:Element_49"/>
+                            </pfx2:Element_49>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_50">
+                            <pfx2:Element_50>
+                                <xsl:value-of select="pfx2:Element_50"/>
+                            </pfx2:Element_50>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_51">
+                            <pfx2:Element_51>
+                                <xsl:value-of select="pfx2:Element_51"/>
+                            </pfx2:Element_51>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_52">
+                            <pfx2:Element_52>
+                                <xsl:value-of select="pfx2:Element_52"/>
+                            </pfx2:Element_52>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_53">
+                            <pfx2:Element_53>
+                                <xsl:value-of select="pfx2:Element_53"/>
+                            </pfx2:Element_53>
+                        </xsl:if>
+                        <pfx2:Element_54>
+                            <xsl:value-of select="'00000000000000000000'"/>
+                        </pfx2:Element_54>
+                        <xsl:if test="pfx2:Element_55">
+                            <pfx2:Element_55>
+                                <xsl:value-of select="pfx2:Element_55"/>
+                            </pfx2:Element_55>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_56">
+                            <pfx2:Element_56>
+                                <xsl:value-of select="pfx2:Element_56"/>
+                            </pfx2:Element_56>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_57">
+                            <pfx2:Element_57>
+                                <xsl:value-of select="pfx2:Element_57"/>
+                            </pfx2:Element_57>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_58">
+                            <pfx2:Element_58>
+                                <xsl:value-of select="pfx2:Element_58"/>
+                            </pfx2:Element_58>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_59">
+                            <pfx2:Element_59>
+                                <xsl:value-of select="pfx2:Element_59"/>
+                            </pfx2:Element_59>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_60">
+                            <pfx2:Element_60>
+                                <xsl:value-of select="pfx2:Element_60"/>
+                            </pfx2:Element_60>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_61">
+                            <pfx2:Element_61>
+                                <xsl:value-of select="pfx2:Element_61"/>
+                            </pfx2:Element_61>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_62">
+                            <pfx2:Element_62>
+                                <xsl:value-of select="pfx2:Element_62"/>
+                            </pfx2:Element_62>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_63">
+                            <pfx2:Element_63>
+                                <xsl:value-of select="pfx2:Element_63"/>
+                            </pfx2:Element_63>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_64">
+                            <pfx2:Element_64>
+                                <xsl:value-of select="pfx2:Element_64"/>
+                            </pfx2:Element_64>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_65">
+                            <pfx2:Element_65>
+                                <xsl:value-of select="pfx2:Element_65"/>
+                            </pfx2:Element_65>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_66">
+                            <pfx2:Element_66>
+                                <xsl:value-of select="pfx2:Element_66"/>
+                            </pfx2:Element_66>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_67">
+                            <pfx2:Element_67>
+                                <xsl:value-of select="pfx2:Element_67"/>
+                            </pfx2:Element_67>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_68">
+                            <pfx2:Element_68>
+                                <xsl:value-of select="pfx2:Element_68"/>
+                            </pfx2:Element_68>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_69">
+                            <pfx2:Element_69>
+                                <xsl:value-of select="pfx2:Element_69"/>
+                            </pfx2:Element_69>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_70">
+                            <pfx2:Element_70>
+                                <xsl:value-of select="pfx2:Element_70"/>
+                            </pfx2:Element_70>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_71">
+                            <pfx2:Element_71>
+                                <xsl:value-of select="pfx2:Element_71"/>
+                            </pfx2:Element_71>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_72">
+                            <pfx2:Element_72>
+                                <xsl:value-of select="pfx2:Element_72"/>
+                            </pfx2:Element_72>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_73">
+                            <pfx2:Element_73>
+                                <xsl:value-of select="pfx2:Element_73"/>
+                            </pfx2:Element_73>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_74">
+                            <pfx2:Element_74>
+                                <xsl:value-of select="pfx2:Element_74"/>
+                            </pfx2:Element_74>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_75">
+                            <pfx2:Element_75>
+                                <xsl:value-of select="pfx2:Element_75"/>
+                            </pfx2:Element_75>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_76">
+                            <pfx2:Element_76>
+                                <xsl:value-of select="pfx2:Element_76"/>
+                            </pfx2:Element_76>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_77">
+                            <pfx2:Element_77>
+                                <xsl:value-of select="pfx2:Element_77"/>
+                            </pfx2:Element_77>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_78">
+                            <pfx2:Element_78>
+                                <xsl:value-of select="pfx2:Element_78"/>
+                            </pfx2:Element_78>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_79">
+                            <pfx2:Element_79>
+                                <xsl:value-of select="pfx2:Element_79"/>
+                            </pfx2:Element_79>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_80">
+                            <pfx2:Element_80>
+                                <xsl:value-of select="pfx2:Element_80"/>
+                            </pfx2:Element_80>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_81">
+                            <pfx2:Element_81>
+                                <xsl:value-of select="pfx2:Element_81"/>
+                            </pfx2:Element_81>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_82">
+                            <pfx2:Element_82>
+                                <xsl:value-of select="pfx2:Element_82"/>
+                            </pfx2:Element_82>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_83">
+                            <pfx2:Element_83>
+                                <xsl:value-of select="pfx2:Element_83"/>
+                            </pfx2:Element_83>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_84">
+                            <pfx2:Element_84>
+                                <xsl:value-of select="pfx2:Element_84"/>
+                            </pfx2:Element_84>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_85">
+                            <pfx2:Element_85>
+                                <xsl:value-of select="pfx2:Element_85"/>
+                            </pfx2:Element_85>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_86">
+                            <pfx2:Element_86>
+                                <xsl:value-of select="pfx2:Element_86"/>
+                            </pfx2:Element_86>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_87">
+                            <pfx2:Element_87>
+                                <xsl:value-of select="pfx2:Element_87"/>
+                            </pfx2:Element_87>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_88">
+                            <pfx2:Element_88>
+                                <xsl:value-of select="pfx2:Element_88"/>
+                            </pfx2:Element_88>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_89">
+                            <pfx2:Element_89>
+                                <xsl:value-of select="pfx2:Element_89"/>
+                            </pfx2:Element_89>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_90">
+                            <pfx2:Element_90>
+                                <xsl:value-of select="pfx2:Element_90"/>
+                            </pfx2:Element_90>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_91">
+                            <pfx2:Element_91>
+                                <xsl:value-of select="pfx2:Element_91"/>
+                            </pfx2:Element_91>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_92">
+                            <pfx2:Element_92>
+                                <xsl:value-of select="pfx2:Element_92"/>
+                            </pfx2:Element_92>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_93">
+                            <pfx2:Element_93>
+                                <xsl:value-of select="pfx2:Element_93"/>
+                            </pfx2:Element_93>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_94">
+                            <pfx2:Element_94>
+                                <xsl:value-of select="pfx2:Element_94"/>
+                            </pfx2:Element_94>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_95">
+                            <pfx2:Element_95>
+                                <xsl:value-of select="pfx2:Element_95"/>
+                            </pfx2:Element_95>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_96">
+                            <pfx2:Element_96>
+                                <xsl:value-of select="pfx2:Element_96"/>
+                            </pfx2:Element_96>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_97">
+                            <pfx2:Element_97>
+                                <xsl:value-of select="pfx2:Element_97"/>
+                            </pfx2:Element_97>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_98">
+                            <pfx2:Element_98>
+                                <xsl:value-of select="pfx2:Element_98"/>
+                            </pfx2:Element_98>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_99">
+                            <pfx2:Element_99>
+                                <xsl:value-of select="pfx2:Element_99"/>
+                            </pfx2:Element_99>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_100">
+                            <pfx2:Element_100>
+                                <xsl:value-of select="pfx2:Element_100"/>
+                            </pfx2:Element_100>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_101">
+                            <pfx2:Element_101>
+                                <xsl:value-of select="pfx2:Element_101"/>
+                            </pfx2:Element_101>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_102">
+                            <pfx2:Element_102>
+                                <xsl:value-of select="pfx2:Element_102"/>
+                            </pfx2:Element_102>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_103">
+                            <pfx2:Element_103>
+                                <xsl:value-of select="pfx2:Element_103"/>
+                            </pfx2:Element_103>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_104">
+                            <pfx2:Element_104>
+                                <xsl:value-of select="pfx2:Element_104"/>
+                            </pfx2:Element_104>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_105">
+                            <pfx2:Element_105>
+                                <xsl:value-of select="pfx2:Element_105"/>
+                            </pfx2:Element_105>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_106">
+                            <pfx2:Element_106>
+                                <xsl:value-of select="pfx2:Element_106"/>
+                            </pfx2:Element_106>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_107">
+                            <pfx2:Element_107>
+                                <xsl:value-of select="pfx2:Element_107"/>
+                            </pfx2:Element_107>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_108">
+                            <pfx2:Element_108>
+                                <xsl:value-of select="pfx2:Element_108"/>
+                            </pfx2:Element_108>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_109">
+                            <pfx2:Element_109>
+                                <xsl:value-of select="pfx2:Element_109"/>
+                            </pfx2:Element_109>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_110">
+                            <pfx2:Element_110>
+                                <xsl:value-of select="pfx2:Element_110"/>
+                            </pfx2:Element_110>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_111">
+                            <pfx2:Element_111>
+                                <xsl:value-of select="pfx2:Element_111"/>
+                            </pfx2:Element_111>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_112">
+                            <pfx2:Element_112>
+                                <xsl:value-of select="pfx2:Element_112"/>
+                            </pfx2:Element_112>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_113">
+                            <pfx2:Element_113>
+                                <xsl:value-of select="pfx2:Element_113"/>
+                            </pfx2:Element_113>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_114">
+                            <pfx2:Element_114>
+                                <xsl:value-of select="pfx2:Element_114"/>
+                            </pfx2:Element_114>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_115">
+                            <pfx2:Element_115>
+                                <xsl:value-of select="pfx2:Element_115"/>
+                            </pfx2:Element_115>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_116">
+                            <pfx2:Element_116>
+                                <xsl:value-of select="pfx2:Element_116"/>
+                            </pfx2:Element_116>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_117">
+                            <pfx2:Element_117>
+                                <xsl:value-of select="pfx2:Element_117"/>
+                            </pfx2:Element_117>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_118">
+                            <pfx2:Element_118>
+                                <xsl:value-of select="pfx2:Element_118"/>
+                            </pfx2:Element_118>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_119">
+                            <pfx2:Element_119>
+                                <xsl:value-of select="pfx2:Element_119"/>
+                            </pfx2:Element_119>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_120">
+                            <pfx2:Element_120>
+                                <xsl:value-of select="pfx2:Element_120"/>
+                            </pfx2:Element_120>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_121">
+                            <pfx2:Element_121>
+                                <xsl:value-of select="pfx2:Element_121"/>
+                            </pfx2:Element_121>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_122">
+                            <pfx2:Element_122>
+                                <xsl:value-of select="pfx2:Element_122"/>
+                            </pfx2:Element_122>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_123">
+                            <pfx2:Element_123>
+                                <xsl:value-of select="pfx2:Element_123"/>
+                            </pfx2:Element_123>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_124">
+                            <pfx2:Element_124>
+                                <xsl:value-of select="pfx2:Element_124"/>
+                            </pfx2:Element_124>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_125">
+                            <pfx2:Element_125>
+                                <xsl:value-of select="pfx2:Element_125"/>
+                            </pfx2:Element_125>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_126">
+                            <pfx2:Element_126>
+                                <xsl:value-of select="pfx2:Element_126"/>
+                            </pfx2:Element_126>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_127">
+                            <pfx2:Element_127>
+                                <xsl:value-of select="pfx2:Element_127"/>
+                            </pfx2:Element_127>
+                        </xsl:if>
+                        <xsl:if test="pfx2:Element_128">
+                            <pfx2:Element_128>
+                                <xsl:value-of select="pfx2:Element_128"/>
+                            </pfx2:Element_128>
+                        </xsl:if>
+                    </pfx2:DataElement>
+                </xsl:for-each>
+            </pfx2:ISOMessages>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InvalidInput">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>327</pd:x>
+        <pd:y>40</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <pfx4:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Invalid data input format &quot;,&#xA;&#x9;tib:render-xml($Start/TransactionReq, false(), true())&#xA;)"/>
+                </message>
+                <messageCode>
+                    <xsl:value-of select="&quot;GENERATE ERROR AUDIT&quot;"/>
+                </messageCode>
+            </pfx4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Rethrow">
+        <pd:type>com.tibco.pe.core.RethrowActivity</pd:type>
+        <pd:resourceType>ae.activities.rethrow</pd:resourceType>
+        <pd:x>331</pd:x>
+        <pd:y>280</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>328</pd:x>
+        <pd:y>154</pd:y>
+        <config>
+            <role>User</role>
+            <suppressHeader>true</suppressHeader>
+        </config>
+        <pd:inputBindings>
+            <ns5:ActivityInput>
+                <message>
+                    <xsl:value-of select="concat(&#xA;&#x9;&quot;Start transaction posting process triggered by &quot;, $Start/TransactionReq/ClientID,&#xA;&#x9;&quot; at &quot;, current-dateTime())"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="&quot;START AUDIT&quot;"/>
+                </msgCode>
+            </ns5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>AssignTimestamp</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>ErrorLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AssignTimestamp</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ErrorLog</pd:from>
+        <pd:to>Rethrow</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>InvalidInput</pd:to>
+        <pd:xpathDescription>invalid input</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>string-length($Start/TransactionReq/pfx2:ISOMessages/pfx2:DataElement/pfx2:Element_62) !=94</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateDataOutput</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>GenerateDataOutput</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

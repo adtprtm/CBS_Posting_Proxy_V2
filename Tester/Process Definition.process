@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/json" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>Tester/Process Definition.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1565677588577</pd:targetNamespace>
+    <pd:activity name="Java Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>371</pd:x>
+        <pd:y>199</pd:y>
+        <config>
+            <javaArchive>/SharedResources/CBS/Posting/Proxy/Library/AliasLibrary.aliaslib</javaArchive>
+            <fileName>ProcessDefinitionJavaCode</fileName>
+            <packageName>Tester.ProcessDefinition</packageName>
+            <fullsource>package Tester.ProcessDefinition;
+import java.util.*;
+import java.io.*;
+import com.prowidesoftware.swift.model.SwiftBlock1;
+import com.prowidesoftware.swift.model.SwiftBlock2Input;
+import com.prowidesoftware.swift.model.field.Field20;
+import com.prowidesoftware.swift.model.field.Field25;
+import com.prowidesoftware.swift.model.field.Field28;
+import com.prowidesoftware.swift.model.field.Field60F;
+import com.prowidesoftware.swift.model.field.Field61;
+import com.prowidesoftware.swift.model.field.Field62F;
+import com.prowidesoftware.swift.model.field.Field86;
+
+import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
+import org.apache.commons.lang.StringUtils;
+import org.json.*;
+public class ProcessDefinitionJavaCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String bankName = "";
+	protected String accountNumber = "";
+	protected String transactionDate = "";
+	protected String reportNumber = "";
+	protected String openingBalance = "";
+	protected String closingBalance = "";
+	protected String transactionObject = "";
+	protected String returnString = "";
+	public String getbankName() {
+		return bankName;
+	}
+	public void setbankName(String val) {
+		bankName = val;
+	}
+	public String getaccountNumber() {
+		return accountNumber;
+	}
+	public void setaccountNumber(String val) {
+		accountNumber = val;
+	}
+	public String gettransactionDate() {
+		return transactionDate;
+	}
+	public void settransactionDate(String val) {
+		transactionDate = val;
+	}
+	public String getreportNumber() {
+		return reportNumber;
+	}
+	public void setreportNumber(String val) {
+		reportNumber = val;
+	}
+	public String getopeningBalance() {
+		return openingBalance;
+	}
+	public void setopeningBalance(String val) {
+		openingBalance = val;
+	}
+	public String getclosingBalance() {
+		return closingBalance;
+	}
+	public void setclosingBalance(String val) {
+		closingBalance = val;
+	}
+	public String gettransactionObject() {
+		return transactionObject;
+	}
+	public void settransactionObject(String val) {
+		transactionObject = val;
+	}
+	public String getreturnString() {
+		return returnString;
+	}
+	public void setreturnString(String val) {
+		returnString = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public ProcessDefinitionJavaCode() {
+	}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	In  : String bankName
+	In  : String accountNumber
+	In  : String transactionDate
+	In  : String reportNumber
+	In  : String openingBalance
+	In  : String closingBalance
+	In  : String transactionObject
+	Out : String returnString
+* Available Variables: DO NOT MODIFY *****/
+MT940 m = new MT940();
+
+m.setSender("PT Bank Bukopin");
+        m.setReceiver("940");
+        m.addField(new Field20(transactionDate));
+        m.addField(new Field25(accountNumber));
+        m.addField(new Field28(reportNumber));
+        
+        String tag60f = "C" + StringUtils.substring(transactionDate, 2, 8) + "IDR" + openingBalance;
+        m.addField(new Field60F(tag60f));
+        
+        JSONObject jo = new JSONObject(transactionObject);
+        JSONArray arr = jo.getJSONArray("transaction");
+        for (int i = 0; i &lt; arr.length(); i++) {
+            String post = arr.getJSONObject(i).getString("post");
+            String amount = arr.getJSONObject(i).getString("amount");
+            String description = arr.getJSONObject(i).getString("description");
+            String tag61 = StringUtils.substring(transactionDate, 2, 8) + post + amount + "NTRF";
+            m.addField(new Field61(tag61));
+            m.addField(new Field86(description));
+        }
+        
+        String tag62f = "C" + StringUtils.substring(transactionDate, 2, 8) + "IDR" + openingBalance;
+        m.addField(new Field62F(tag62f));
+
+        returnString = m.message();
+        returnString = returnString.replace("PT Bank AXXX0000000000}", "PT BANK BUKOPIN}");
+        returnString = returnString.replace("{2:I940N}", "{2:I940}");
+}
+}
+</fullsource>
+            <inputData>
+                <row>
+                    <fieldName>bankName</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>accountNumber</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>transactionDate</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>reportNumber</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>openingBalance</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>closingBalance</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+                <row>
+                    <fieldName>transactionObject</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>required</fieldRequired>
+                </row>
+            </inputData>
+            <outputData>
+                <row>
+                    <fieldName>returnString</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </outputData>
+            <byteCode>
+                <class>
+                    <name>ProcessDefinitionJavaCode</name>
+                    <byteCode>yv66vgAAADMArwkAOABkCQA4AGUJADgAZgkAOABnCQA4AGgJADgAaQkAOABqCQA4AGsKADkAbAgAbQcAbgoACwBsCABvCgALAHAIAHEKAAsAcgcAcwoAEQB0CgALAHUHAHYKABQAdAcAdwoAFgB0BwB4CgAYAGwIAHkKABgAegoAewB8CAB9CgAYAH4HAH8KAB8AdAcAgAoAIQB0CACBCgAhAIIKAIMAhAoAgwCFCACGCgAhAIcIAIgIAIkIAIoHAIsKACwAdAcAjAoALgB0BwCNCgAwAHQKAAsAjggAjwgAkAoAkQCSCACTCACUBwCVBwCWAQAIYmFua05hbWUBABJMamF2YS9sYW5nL1N0cmluZzsBAA1hY2NvdW50TnVtYmVyAQAPdHJhbnNhY3Rpb25EYXRlAQAMcmVwb3J0TnVtYmVyAQAOb3BlbmluZ0JhbGFuY2UBAA5jbG9zaW5nQmFsYW5jZQEAEXRyYW5zYWN0aW9uT2JqZWN0AQAMcmV0dXJuU3RyaW5nAQALZ2V0YmFua05hbWUBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAAtzZXRiYW5rTmFtZQEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAEGdldGFjY291bnROdW1iZXIBABBzZXRhY2NvdW50TnVtYmVyAQASZ2V0dHJhbnNhY3Rpb25EYXRlAQASc2V0dHJhbnNhY3Rpb25EYXRlAQAPZ2V0cmVwb3J0TnVtYmVyAQAPc2V0cmVwb3J0TnVtYmVyAQARZ2V0b3BlbmluZ0JhbGFuY2UBABFzZXRvcGVuaW5nQmFsYW5jZQEAEWdldGNsb3NpbmdCYWxhbmNlAQARc2V0Y2xvc2luZ0JhbGFuY2UBABRnZXR0cmFuc2FjdGlvbk9iamVjdAEAFHNldHRyYW5zYWN0aW9uT2JqZWN0AQAPZ2V0cmV0dXJuU3RyaW5nAQAPc2V0cmV0dXJuU3RyaW5nAQAGPGluaXQ+AQADKClWAQAGaW52b2tlAQANU3RhY2tNYXBUYWJsZQcAlQcAbgcAlwcAgAcAmAEACkV4Y2VwdGlvbnMHAJkBAApTb3VyY2VGaWxlAQAeUHJvY2Vzc0RlZmluaXRpb25KYXZhQ29kZS5qYXZhDAA6ADsMADwAOwwAPQA7DAA+ADsMAD8AOwwAQAA7DABBADsMAEIAOwwAVwBYAQAAAQAuY29tL3Byb3dpZGVzb2Z0d2FyZS9zd2lmdC9tb2RlbC9tdC9tdDl4eC9NVDk0MAEAD1BUIEJhbmsgQnVrb3BpbgwAmgBIAQADOTQwDACbAEgBAC1jb20vcHJvd2lkZXNvZnR3YXJlL3N3aWZ0L21vZGVsL2ZpZWxkL0ZpZWxkMjAMAFcASAwAnACdAQAtY29tL3Byb3dpZGVzb2Z0d2FyZS9zd2lmdC9tb2RlbC9maWVsZC9GaWVsZDI1AQAtY29tL3Byb3dpZGVzb2Z0d2FyZS9zd2lmdC9tb2RlbC9maWVsZC9GaWVsZDI4AQAXamF2YS9sYW5nL1N0cmluZ0J1aWxkZXIBAAFDDACeAJ8HAKAMAKEAogEAA0lEUgwAowBEAQAuY29tL3Byb3dpZGVzb2Z0d2FyZS9zd2lmdC9tb2RlbC9maWVsZC9GaWVsZDYwRgEAE29yZy9qc29uL0pTT05PYmplY3QBAAt0cmFuc2FjdGlvbgwApAClBwCYDACmAKcMAKgAqQEABHBvc3QMAKoAqwEABmFtb3VudAEAC2Rlc2NyaXB0aW9uAQAETlRSRgEALWNvbS9wcm93aWRlc29mdHdhcmUvc3dpZnQvbW9kZWwvZmllbGQvRmllbGQ2MQEALWNvbS9wcm93aWRlc29mdHdhcmUvc3dpZnQvbW9kZWwvZmllbGQvRmllbGQ4NgEALmNvbS9wcm93aWRlc29mdHdhcmUvc3dpZnQvbW9kZWwvZmllbGQvRmllbGQ2MkYMAKwARAEAF1BUIEJhbmsgQVhYWDAwMDAwMDAwMDB9AQAQUFQgQkFOSyBCVUtPUElOfQcAlwwArQCuAQAJezI6STk0ME59AQAIezI6STk0MH0BADJUZXN0ZXIvUHJvY2Vzc0RlZmluaXRpb24vUHJvY2Vzc0RlZmluaXRpb25KYXZhQ29kZQEAEGphdmEvbGFuZy9PYmplY3QBABBqYXZhL2xhbmcvU3RyaW5nAQASb3JnL2pzb24vSlNPTkFycmF5AQATamF2YS9sYW5nL0V4Y2VwdGlvbgEACXNldFNlbmRlcgEAC3NldFJlY2VpdmVyAQAIYWRkRmllbGQBADAoTGNvbS9wcm93aWRlc29mdHdhcmUvc3dpZnQv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</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <bankName>
+                    <xsl:value-of select="'PT Bank Bukopin'"/>
+                </bankName>
+                <accountNumber>
+                    <xsl:value-of select="4202007532"/>
+                </accountNumber>
+                <transactionDate>
+                    <xsl:value-of select="'20190813'"/>
+                </transactionDate>
+                <reportNumber>
+                    <xsl:value-of select="'222'"/>
+                </reportNumber>
+                <openingBalance>
+                    <xsl:value-of select="'80000'"/>
+                </openingBalance>
+                <closingBalance>
+                    <xsl:value-of select="'200000'"/>
+                </closingBalance>
+                <transactionObject>
+                    <xsl:value-of select="$Render-JSON/ns:ActivityOutputClass/jsonString"/>
+                </transactionObject>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Render JSON">
+        <pd:type>com.tibco.plugin.json.activities.JSONRenderActivity</pd:type>
+        <pd:resourceType>ae.activities.JSONRenderActivity</pd:resourceType>
+        <pd:x>203</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <SchemaType>xsdType</SchemaType>
+            <BadgerfishCheck>false</BadgerfishCheck>
+            <removeRootElementForInput>true</removeRootElementForInput>
+            <ActivityInputEditor>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="transaction" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="post" type="xsd:string"/>
+                                        <xsd:element name="amount" type="xsd:string"/>
+                                        <xsd:element name="description" type="xsd:string"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </ActivityInputEditor>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInputClass>
+                <root>
+                    <transaction>
+                        <post>
+                            <xsl:value-of select="'CR'"/>
+                        </post>
+                        <amount>
+                            <xsl:value-of select="'300000'"/>
+                        </amount>
+                        <description>
+                            <xsl:value-of select="'Tes Transaksi'"/>
+                        </description>
+                    </transaction>
+                    <transaction>
+                        <post>
+                            <xsl:value-of select="'DR'"/>
+                        </post>
+                        <amount>
+                            <xsl:value-of select="'100000'"/>
+                        </amount>
+                        <description>
+                            <xsl:value-of select="'Tes Transaksi debet'"/>
+                        </description>
+                    </transaction>
+                </root>
+            </ns:ActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Render JSON</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Render JSON</pd:from>
+        <pd:to>Java Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java Code</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

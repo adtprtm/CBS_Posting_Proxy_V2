@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://xml.asyst.co.id/cbs/posting/inqdata"
+	 targetNamespace="http://xml.asyst.co.id/cbs/posting/inqdata"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="InqData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="iACNO" type="xs:string" minOccurs="0"/>
+				<xs:element name="iACTYPE" type="xs:string" minOccurs="0"/>
+				<xs:element name="iRESP" type="xs:string" minOccurs="0"/>
+				<xs:element name="iACNAME" type="xs:string" minOccurs="0"/>
+				<xs:element name="iCCY" type="xs:string" minOccurs="0"/>
+				<xs:element name="iBALANCEs" type="xs:string" minOccurs="0"/>
+				<xs:element name="iBALANCE" type="xs:string" minOccurs="0"/>
+				<xs:element name="iPLAFOND" type="xs:string" minOccurs="0"/>
+				<xs:element name="iAMBLK" type="xs:string" minOccurs="0"/>
+				<xs:element name="iABALANCE" type="xs:string" minOccurs="0"/>
+				<xs:element name="iCIF" type="xs:string" minOccurs="0"/>			
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

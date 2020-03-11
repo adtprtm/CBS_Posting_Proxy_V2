@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://xml.asyst.co.id/cbs/posting/postingdata"
+	 targetNamespace="http://xml.asyst.co.id/cbs/posting/postingdata"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="PostingData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TrxType" minOccurs="0"/>
+				<xs:element ref="SSTAN" minOccurs="0"/>
+				<xs:element ref="TrxDTime" minOccurs="0"/>
+				<xs:element ref="DMerchantID" minOccurs="0"/>
+				<xs:element ref="DTerminalID" minOccurs="0"/>
+				<xs:element ref="DPrglib" minOccurs="0"/>
+				<xs:element ref="DCurlib" minOccurs="0"/>
+				<xs:element ref="SAcnoT" minOccurs="0"/>
+				<xs:element ref="SCcyT" minOccurs="0"/>
+				<xs:element ref="STypeT" minOccurs="0"/>
+				<xs:element ref="SAcnoC" minOccurs="0"/>
+				<xs:element ref="SCcyC" minOccurs="0"/>
+				<xs:element ref="STypeC" minOccurs="0"/>
+				<xs:element ref="SAmType" minOccurs="0"/>
+				<xs:element ref="SAmtr" minOccurs="0"/>
+				<xs:element ref="SRtx" minOccurs="0"/>
+				<xs:element ref="STrDes1" minOccurs="0"/>
+				<xs:element ref="STrDes2" minOccurs="0"/>
+				<xs:element ref="STrDes3" minOccurs="0"/>
+				<xs:element ref="STglWrk" minOccurs="0"/>
+				<xs:element ref="SWarkat" minOccurs="0"/>
+				<xs:element ref="SStlID" minOccurs="0"/>
+				<xs:element ref="STtyp" minOccurs="0"/>
+				<xs:element ref="SProdCd" minOccurs="0"/>
+				<xs:element ref="SFeeCod" minOccurs="0"/>
+				<xs:element ref="SFwdiID" minOccurs="0"/>
+				<xs:element ref="SYYYY" minOccurs="0"/>
+				<xs:element ref="SMMDD" minOccurs="0"/>
+				<xs:element ref="SBTCOD" minOccurs="0"/>
+				<xs:element ref="STrno" minOccurs="0"/>
+				<xs:element ref="SOpCode" minOccurs="0"/>
+				<xs:element ref="SDvcCod" minOccurs="0"/>
+				<xs:element ref="SFeeAmtr" minOccurs="0"/>
+				<xs:element ref="SAqtr" minOccurs="0"/>
+				<xs:element ref="SRRN" minOccurs="0"/>
+				<xs:element ref="SBlank" minOccurs="0"/>
+				<xs:element ref="RYYYY" minOccurs="0"/>
+				<xs:element ref="RMMDD" minOccurs="0"/>
+				<xs:element ref="RBTCOD" minOccurs="0"/>
+				<xs:element ref="RTrno" minOccurs="0"/>
+				<xs:element ref="RResp" minOccurs="0"/>
+				<xs:element ref="RSaldoS" minOccurs="0"/>
+				<xs:element ref="RSaldo" minOccurs="0"/>
+				<xs:element ref="RErrMsg" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TrxType" type="xs:string"/>
+	<xs:element name="SSTAN" type="xs:string"/>
+	<xs:element name="TrxDTime" type="xs:string"/>
+	<xs:element name="DMerchantID" type="xs:string"/>
+	<xs:element name="DTerminalID" type="xs:string"/>
+	<xs:element name="DPrglib" type="xs:string"/>
+	<xs:element name="DCurlib" type="xs:string"/>
+	<xs:element name="SAcnoT" type="xs:string"/>
+	<xs:element name="SCcyT" type="xs:string"/>
+	<xs:element name="STypeT" type="xs:string"/>
+	<xs:element name="SAcnoC" type="xs:string"/>
+	<xs:element name="SCcyC" type="xs:string"/>
+	<xs:element name="STypeC" type="xs:string"/>
+	<xs:element name="SAmType" type="xs:string"/>
+	<xs:element name="SAmtr" type="xs:string"/>
+	<xs:element name="SRtx" type="xs:string"/>
+	<xs:element name="STrDes1" type="xs:string"/>
+	<xs:element name="STrDes2" type="xs:string"/>
+	<xs:element name="STrDes3" type="xs:string"/>
+	<xs:element name="STglWrk" type="xs:string"/>
+	<xs:element name="SWarkat" type="xs:string"/>
+	<xs:element name="SStlID" type="xs:string"/>
+	<xs:element name="STtyp" type="xs:string"/>
+	<xs:element name="SProdCd" type="xs:string"/>
+	<xs:element name="SFeeCod" type="xs:string"/>
+	<xs:element name="SFwdiID" type="xs:string"/>
+	<xs:element name="SYYYY" type="xs:string"/>
+	<xs:element name="SMMDD" type="xs:string"/>
+	<xs:element name="SBTCOD" type="xs:string"/>
+	<xs:element name="STrno" type="xs:string"/>
+	<xs:element name="SOpCode" type="xs:string"/>
+	<xs:element name="SDvcCod" type="xs:string"/>
+	<xs:element name="SFeeAmtr" type="xs:string"/>
+	<xs:element name="SAqtr" type="xs:string"/>
+	<xs:element name="SRRN" type="xs:string"/>
+	<xs:element name="SBlank" type="xs:string"/>
+	<xs:element name="RYYYY" type="xs:string"/>
+	<xs:element name="RMMDD" type="xs:string"/>
+	<xs:element name="RBTCOD" type="xs:string"/>
+	<xs:element name="RTrno" type="xs:string"/>
+	<xs:element name="RResp" type="xs:string"/>
+	<xs:element name="RSaldoS" type="xs:string"/>
+	<xs:element name="RSaldo" type="xs:decimal"/>
+	<xs:element name="RErrMsg" type="xs:string"/>
+</xs:schema>

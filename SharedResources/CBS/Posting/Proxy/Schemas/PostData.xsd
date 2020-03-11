@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://xml.asyst.co.id/cbs/posting/postdata"
+	 targetNamespace="http://xml.asyst.co.id/cbs/posting/postdata"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="PostData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TrxType" type="str4" minOccurs="0"/>
+				<xs:element name="STAN" type="xs:string" minOccurs="0"/>
+				<xs:element name="TrxDateTime" type="xs:string" minOccurs="0"/>
+				<xs:element name="MerchantID" type="xs:string" minOccurs="0"/>
+				<xs:element name="TermID" type="xs:string" minOccurs="0"/>
+				<xs:element name="ProgLib" type="xs:string" minOccurs="0"/>
+				<xs:element name="CurLib" type="xs:string" minOccurs="0"/>
+				<xs:element name="AcnoT" type="xs:string" minOccurs="0"/>
+				<xs:element name="CcyT" type="xs:string" minOccurs="0"/>
+				<xs:element name="TypeT" type="xs:string" minOccurs="0"/>
+				<xs:element name="AcnoC" type="xs:string" minOccurs="0"/>
+				<xs:element name="CcyC" type="xs:string" minOccurs="0"/>
+				<xs:element name="TypeC" type="xs:string" minOccurs="0"/>
+				<xs:element name="AmType" type="xs:string" minOccurs="0"/>
+				<xs:element name="Amtr" type="xs:string" minOccurs="0"/>
+				<xs:element name="Rtx" type="xs:string" minOccurs="0"/>
+				<xs:element name="TrDesc1" type="xs:string" minOccurs="0"/>
+				<xs:element name="TrDesc2" type="xs:string" minOccurs="0"/>
+				<xs:element name="TrDesc3" type="xs:string" minOccurs="0"/>
+				<xs:element name="TglWrk" type="xs:string" minOccurs="0"/>
+				<xs:element name="Warkat" type="xs:string" minOccurs="0"/>
+				<xs:element name="StlCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="StlType" type="xs:string" minOccurs="0"/>
+				<xs:element name="ProductCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="FeeCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="FwdID" type="xs:string" minOccurs="0"/>
+				<xs:element name="Year" type="xs:string" minOccurs="0"/>
+				<xs:element name="MonthDate" type="xs:string" minOccurs="0"/>
+				<xs:element name="BTCO" type="xs:string" minOccurs="0"/>
+				<xs:element name="TrxNo" type="xs:string" minOccurs="0"/>
+				<xs:element name="ResCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="SaldoID" type="xs:string" minOccurs="0"/>
+				<xs:element name="Saldo" type="xs:decimal" minOccurs="0"/>
+				<xs:element name="ErrMsg" type="xs:string" minOccurs="0"/>
+				<xs:element name="DeviceCode" type="xs:string" minOccurs="0"/>
+				<xs:element name="Keterangan" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="str4">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="any">
+        <dataTypeName>any</dataTypeName>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="assocList">
+        <dataTypeName>assocList</dataTypeName>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="binary">
+        <dataTypeName>binary</dataTypeName>
+        <javaClass>java.lang.Byte[]</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="boolean">
+        <dataTypeName>boolean</dataTypeName>
+        <javaClass>java.lang.Boolean</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="char">
+        <dataTypeName>char</dataTypeName>
+        <javaClass>java.lang.Character</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="date">
+        <dataTypeName>date</dataTypeName>
+        <javaClass>java.util.Date</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="dateTime">
+        <dataTypeName>dateTime</dataTypeName>
+        <javaClass>java.util.Date</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="i1">
+        <dataTypeName>i1</dataTypeName>
+        <javaClass>java.lang.Byte</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="i2">
+        <dataTypeName>i2</dataTypeName>
+        <javaClass>java.lang.Short</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="i4">
+        <dataTypeName>i4</dataTypeName>
+        <javaClass>java.lang.Integer</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="i8">
+        <dataTypeName>i8</dataTypeName>
+        <javaClass>java.lang.Long</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="interval">
+        <dataTypeName>interval</dataTypeName>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="r4">
+        <dataTypeName>r4</dataTypeName>
+        <javaClass>java.lang.Float</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="r8">
+        <dataTypeName>r8</dataTypeName>
+        <javaClass>java.lang.Double</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="string">
+        <dataTypeName>string</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="time">
+        <dataTypeName>time</dataTypeName>
+        <javaClass>java.util.Date</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="ui1">
+        <dataTypeName>ui1</dataTypeName>
+        <javaClass>java.lang.Short</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="ui2">
+        <dataTypeName>ui2</dataTypeName>
+        <javaClass>java.lang.Integer</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="ui4">
+        <dataTypeName>ui4</dataTypeName>
+        <javaClass>java.lang.Long</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="ui8">
+        <dataTypeName>ui8</dataTypeName>
+        <javaClass>java.lang.Long</javaClass>
+    </scalar>
+    <scalar xmlns:AESchema="http://www.tibco.com/xmlns/aemeta/types/2002" name="void">
+        <dataTypeName>void</dataTypeName>
+    </scalar>
+    <designer>
+        <lockedProperties>
+            <locked>
+                <resource>/Scalars/char.180</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.218</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.624</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.179</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.200</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/fixed.20.2</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/fixed.19.2</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.169</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.30</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.1</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.7</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.6</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.11</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.60</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.40</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.20</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.3</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.19</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.15</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.12</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.4</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.18</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.2</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.10</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/char.140</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/fixed.2.0</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/fixed.18.0</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Scalars/fixed.10.0</resource>
+                <properties>name</properties>
+            </locked>
+        </lockedProperties>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+    <scalar name="fixed.10.0">
+        <dataTypeName>fixed.10.0</dataTypeName>
+        <precision>0</precision>
+        <javaClass>java.lang.Double</javaClass>
+        <length>10</length>
+        <scale>10</scale>
+    </scalar>
+    <scalar name="fixed.18.0">
+        <dataTypeName>fixed.18.0</dataTypeName>
+        <precision>0</precision>
+        <javaClass>java.lang.Double</javaClass>
+        <length>18</length>
+        <scale>18</scale>
+    </scalar>
+    <scalar name="fixed.2.0">
+        <dataTypeName>fixed.2.0</dataTypeName>
+        <precision>0</precision>
+        <javaClass>java.lang.Double</javaClass>
+        <length>2</length>
+        <scale>2</scale>
+    </scalar>
+    <scalar name="char.140">
+        <dataTypeName>char.140</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>140</length>
+        <scale>140</scale>
+    </scalar>
+    <scalar name="char.10">
+        <dataTypeName>char.10</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>10</length>
+        <scale>10</scale>
+    </scalar>
+    <scalar name="char.2">
+        <dataTypeName>char.2</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>2</length>
+        <scale>2</scale>
+    </scalar>
+    <scalar name="char.18">
+        <dataTypeName>char.18</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>18</length>
+        <scale>18</scale>
+    </scalar>
+    <scalar name="char.4">
+        <dataTypeName>char.4</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>4</length>
+        <scale>4</scale>
+    </scalar>
+    <scalar name="char.12">
+        <dataTypeName>char.12</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>12</length>
+        <scale>12</scale>
+    </scalar>
+    <scalar name="char.15">
+        <dataTypeName>char.15</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>15</length>
+        <scale>15</scale>
+    </scalar>
+    <scalar name="char.19">
+        <dataTypeName>char.19</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>19</length>
+        <scale>19</scale>
+    </scalar>
+    <scalar name="char.3">
+        <dataTypeName>char.3</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>3</length>
+        <scale>3</scale>
+    </scalar>
+    <scalar name="char.20">
+        <dataTypeName>char.20</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>20</length>
+        <scale>20</scale>
+    </scalar>
+    <scalar name="char.40">
+        <dataTypeName>char.40</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>40</length>
+        <scale>40</scale>
+    </scalar>
+    <scalar name="char.60">
+        <dataTypeName>char.60</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>60</length>
+        <scale>60</scale>
+    </scalar>
+    <scalar name="char.11">
+        <dataTypeName>char.11</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>11</length>
+        <scale>11</scale>
+    </scalar>
+    <scalar name="char.6">
+        <dataTypeName>char.6</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>6</length>
+        <scale>6</scale>
+    </scalar>
+    <scalar name="char.7">
+        <dataTypeName>char.7</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>7</length>
+        <scale>7</scale>
+    </scalar>
+    <scalar name="char.1">
+        <dataTypeName>char.1</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>1</length>
+        <scale>1</scale>
+    </scalar>
+    <scalar name="char.30">
+        <dataTypeName>char.30</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>30</length>
+        <scale>30</scale>
+    </scalar>
+    <scalar name="char.169">
+        <dataTypeName>char.169</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>169</length>
+        <scale>169</scale>
+    </scalar>
+    <scalar name="fixed.19.2">
+        <dataTypeName>fixed.19.2</dataTypeName>
+        <precision>2</precision>
+        <javaClass>java.lang.Double</javaClass>
+        <length>19</length>
+        <scale>19</scale>
+    </scalar>
+    <scalar name="fixed.20.2">
+        <dataTypeName>fixed.20.2</dataTypeName>
+        <precision>2</precision>
+        <javaClass>java.lang.Double</javaClass>
+        <length>20</length>
+        <scale>20</scale>
+    </scalar>
+    <scalar name="char.200">
+        <dataTypeName>char.200</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>200</length>
+        <scale>200</scale>
+    </scalar>
+    <scalar name="char.179">
+        <dataTypeName>char.179</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>179</length>
+        <scale>179</scale>
+    </scalar>
+    <scalar name="char.624">
+        <dataTypeName>char.624</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>624</length>
+        <scale>624</scale>
+    </scalar>
+    <scalar name="char.218">
+        <dataTypeName>char.218</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>218</length>
+        <scale>218</scale>
+    </scalar>
+    <scalar name="char.180">
+        <dataTypeName>char.180</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+        <length>180</length>
+        <scale>180</scale>
+    </scalar>
+</Repository:repository>

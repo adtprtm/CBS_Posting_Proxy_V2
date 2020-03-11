@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>jdbc.password</name>
+			<value>#!kHZwwJz3spMsntRqyYUvX3pVkMCtt/hvSXVXTd1akX/QiaEIvjQXSw==</value>
+			<deploymentSettable>false</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>Password</type>
+			<modTime>1583835081000</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>jdbc.url</name>
+			<value>jdbc:sqlserver://10.2.62.51:1433;databaseName=MIA_APPS</value>
+			<deploymentSettable>false</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1583835081101</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>jdbc.username</name>
+			<value>sa</value>
+			<deploymentSettable>false</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1583835081176</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

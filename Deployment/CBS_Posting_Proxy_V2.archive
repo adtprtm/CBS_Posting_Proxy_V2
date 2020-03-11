@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002">
+    <enterpriseArchive>
+        <sharedArchive name="Shared Archive">
+            <resourceType>shared.archive.resource</resourceType>
+            <authorProperty>MIRS</authorProperty>
+            <sharedResources>/SharedResources/Commons/Schemas/WebServices/Fault.xsd,/SharedResources/Commons/Schemas/WebServices/Header.xsd</sharedResources>
+            <sharedFiles/>
+            <sharedJarFiles/>
+        </sharedArchive>
+        <processArchive name="Process Archive">
+            <resourceType>process.archive.resource</resourceType>
+            <authorProperty>ASYST</authorProperty>
+            <processProperty>/Implementation/CBS/Posting/Proxy/SOAPEndpoint/CBSPostingProxy-JMS.serviceagent,/Implementation/CBS/Posting/Proxy/SOAPEndpoint/CBSPostingProxy.serviceagent</processProperty>
+        </processArchive>
+        <versionProperty>11</versionProperty>
+        <authorProperty>Tim Middleware</authorProperty>
+        <addServiceSettableGvars>true</addServiceSettableGvars>
+        <name>CBS_Posting_Proxy_V2</name>
+        <designer>
+            <lockedProperties/>
+            <fixedChildren/>
+            <resourceDescriptions/>
+        </designer>
+        <fileLocationProperty>D:\WORK\EAR ARCHIEVE\CBS_Posting_Proxy_V2.ear</fileLocationProperty>
+    </enterpriseArchive>
+</Repository:repository>
